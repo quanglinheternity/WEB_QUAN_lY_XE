@@ -14,7 +14,8 @@ public record NguoiDungResponse(
     String diaChi,
     Boolean trangThai,
     LocalDateTime createdAt,
-    LocalDateTime updatedAt
+    LocalDateTime updatedAt,
+    TaiXeResponse taiXe
 ) {
 
 }

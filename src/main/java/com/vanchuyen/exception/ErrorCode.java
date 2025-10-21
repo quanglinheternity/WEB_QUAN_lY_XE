@@ -17,8 +17,8 @@ public enum ErrorCode {
     AUTHENTICATION_REQUIRED(2002, "Bạn chưa đăng nhập", HttpStatus.UNAUTHORIZED),
     TOKEN_EXPIRED(2003, "Token đã hết hạn", HttpStatus.UNAUTHORIZED),
 
-    
-
+    INVALID_STATE_TRANSITION(2004, "Trạng thái đã được xử lý", HttpStatus.BAD_REQUEST),
+    THONG_TIN_TAI_XE_REQUIRED(2005, "Thống tin tài xế không được để trống", HttpStatus.BAD_REQUEST),
     // 400 - Bad Request
     INVALID_REQUEST(1000, "Request không hợp lệ", HttpStatus.BAD_REQUEST),
     
@@ -79,6 +79,25 @@ public enum ErrorCode {
     NGAY_SINH_PAST(1009, "Ngày sinh phải là ngày trong quá khứ", HttpStatus.BAD_REQUEST),
 
     AUTHENTICATION_FAILED(2001, "Sai tài khoản hoặc mật khẩu", HttpStatus.UNAUTHORIZED),
+     LICH_TRINH_ID_REQUIRED(1001, "Lịch trình không được để trống", HttpStatus.BAD_REQUEST),
+    LOAI_CHI_PHI_ID_REQUIRED(1002, "Loại chi phí không được để trống", HttpStatus.BAD_REQUEST),
+    SO_TIEN_REQUIRED(1003, "Số tiền không được để trống", HttpStatus.BAD_REQUEST),
+    SO_TIEN_INVALID(1004, "Số tiền phải lớn hơn 0", HttpStatus.BAD_REQUEST),
+    NGAY_CHI_PHI_REQUIRED(1005, "Ngày chi phí không được để trống", HttpStatus.BAD_REQUEST),
+    DIA_DIEM_CHI_PHI_TOO_LONG(1006, "Địa điểm chi phí không được vượt quá 255 ký tự", HttpStatus.BAD_REQUEST),
+    YEU_CAU_CHI_PHI_NOT_FOUND(1007, "Yêu cầu chi phí không tìm thấy", HttpStatus.BAD_REQUEST),
+    LICH_TRINH_NOT_FOUND(1008, "Lịch trình không tìm thấy", HttpStatus.BAD_REQUEST),
+    LOAI_CHI_PHI_NOT_FOUND(1009, "Loại chi phí không tìm thấy", HttpStatus.BAD_REQUEST),
+    TAI_XE_SO_GPLX_REQUIRED(3101, "Số GPLX không được để trống", HttpStatus.BAD_REQUEST),
+    TAI_XE_LOAI_GPLX_REQUIRED(3102, "Loại GPLX không được để trống", HttpStatus.BAD_REQUEST),
+    TAI_XE_NGAY_CAP_GPLX_REQUIRED(3103, "Ngày cấp GPLX không được để trống", HttpStatus.BAD_REQUEST),
+    TAI_XE_NGAY_HET_HAN_GPLX_REQUIRED(3104, "Ngày hết hạn GPLX không được để trống", HttpStatus.BAD_REQUEST),
+    TAI_XE_KINH_NGHIEM_REQUIRED(3105, "Kinh nghiệm (năm) không được để trống", HttpStatus.BAD_REQUEST),
+    TAI_XE_KINH_NGHIEM_INVALID(3106, "Kinh nghiệm năm không được âm", HttpStatus.BAD_REQUEST),
+    TAI_XE_TRANG_THAI_REQUIRED(3107, "Trạng thái làm việc không được để trống", HttpStatus.BAD_REQUEST),
+    TAI_XE_MUC_LUONG_REQUIRED(3108, "Mức lương cơ bản không được để trống", HttpStatus.BAD_REQUEST),
+    TAI_XE_MUC_LUONG_INVALID(3109, "Mức lương cơ bản phải lớn hơn 0", HttpStatus.BAD_REQUEST),
+    TAI_XE_NGUOI_DUNG_ID_REQUIRED(3110, "ID người dùng không được để trống", HttpStatus.BAD_REQUEST),
 
     ;
     private int code;

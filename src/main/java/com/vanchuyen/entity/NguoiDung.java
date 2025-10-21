@@ -47,6 +47,10 @@ public class NguoiDung {
     
     @Column(name = "trang_thai")
     private Boolean trangThai;
+
+    @Column(name = "vai_tro")
+    private String vaiTro;
+
     
     @Column(name = "created_at")
     private LocalDateTime createdAt;

@@ -1,5 +1,6 @@
 package com.vanchuyen.dto.request;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,10 @@ public class NguoiDungCreateRequest {
     String diaChi;
 
     Boolean trangThai;
+    String vaiTro;
+    
+    @Valid
+    TaiXeRequest thongTinTaiXe;
 
     
 }
