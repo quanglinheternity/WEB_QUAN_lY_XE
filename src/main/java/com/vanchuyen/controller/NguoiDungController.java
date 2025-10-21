@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vanchuyen.dto.request.NguoiDungCreateRequest;
 import com.vanchuyen.dto.response.ApiResponse;
 import com.vanchuyen.dto.response.NguoiDungResponse;
-import com.vanchuyen.entity.NguoiDung;
 import com.vanchuyen.service.NguoiDungService;
 
 import jakarta.validation.Valid;
@@ -33,8 +32,8 @@ public class NguoiDungController {
     NguoiDungService nguoiDungService;
 
     @GetMapping
-    public ApiResponse<List<NguoiDung>> getAll() {
-        return ApiResponse.<List<NguoiDung>>builder()
+    public ApiResponse<List<NguoiDungResponse>> getAll() {
+        return ApiResponse.<List<NguoiDungResponse>>builder()
                 .data(nguoiDungService.getAll())
                 .build();
     }
@@ -60,6 +59,10 @@ public class NguoiDungController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         nguoiDungService.deleted(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/myInfo")
+    ApiResponse<NguoiDungResponse> getMyInfo() {
+        return ApiResponse.<NguoiDungResponse>builder().data(nguoiDungService.getMyInfo()).build();
     }
     // @PutMapping("/{id}/trang-thai")
     // public ApiResponse<String> updateByTrangThai(@PathVariable Integer id) {

@@ -24,7 +24,7 @@ spring:
   #     platform: mysql
 jwt:  
   signerKey: bvkfSG5tgcc6kHcMWz6VpgyEjCmg16w8EzZv5mPs3KT4Tt1lS3AhkkOBE3oabTJ8
-  vaild-duration: 1800
+  vaild-duration: 18000
   refresh-duration: 86400
 logging:
   level:

@@ -1,8 +1,9 @@
 package com.vanchuyen.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,14 @@ import lombok.experimental.FieldDefaults;
 public class NguoiDungService {
     NguoiDungRepository nguoiDungRepository;
     NguoiDungMapper nguoiDungMapper;
-    public List<NguoiDung> getAll() {
-        return nguoiDungRepository.findAll();
+    PasswordEncoder passwordEncoder;
+
+    public List<NguoiDungResponse> getAll() {
+        // return nguoiDungRepository.findAll();
+        return nguoiDungRepository.findAll()
+                .stream()
+                .map(nguoiDungMapper::toResponse)
+                .collect(Collectors.toList());
     }
     public NguoiDungResponse create(NguoiDungCreateRequest request) {
         // Kiểm tra tài khoản đã tồn tại
@@ -35,8 +42,7 @@ public class NguoiDungService {
             throw new AppException(ErrorCode.NGUOI_DUNG_ALREADY_EXISTS);
         }
         NguoiDung nguoiDung = nguoiDungMapper.toCreateEntity(request);
-        PasswordEncoder passwordService = new BCryptPasswordEncoder(10);
-        nguoiDung.setMatKhau(passwordService.encode(request.getMatKhau()));
+        nguoiDung.setMatKhau(passwordEncoder.encode(request.getMatKhau()));
         nguoiDung = nguoiDungRepository.save(nguoiDung);
         return nguoiDungMapper.toResponse(nguoiDung);
     }
@@ -47,8 +53,7 @@ public class NguoiDungService {
             throw new AppException(ErrorCode.NGUOI_DUNG_EXISTED);
         }
         nguoiDungMapper.updateFromRequest(request, nguoiDung);
-        PasswordEncoder passwordService = new BCryptPasswordEncoder(10);
-        nguoiDung.setMatKhau(passwordService.encode(request.getMatKhau()));
+        nguoiDung.setMatKhau(passwordEncoder.encode(request.getMatKhau()));
         nguoiDung = nguoiDungRepository.save(nguoiDung);
         return nguoiDungMapper.toResponse(nguoiDung);
     }
@@ -59,6 +64,13 @@ public class NguoiDungService {
     }
     public NguoiDungResponse getById(Integer id) {
         NguoiDung nguoiDung = nguoiDungRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.NGUOI_DUNG_NOT_FOUND));
+        return nguoiDungMapper.toResponse(nguoiDung);
+    }
+    public NguoiDungResponse getMyInfo() {
+        var conText = SecurityContextHolder.getContext();
+        String name =  conText.getAuthentication().getName();
+        NguoiDung nguoiDung = nguoiDungRepository.findByTaiKhoan(name)
                 .orElseThrow(() -> new AppException(ErrorCode.NGUOI_DUNG_NOT_FOUND));
         return nguoiDungMapper.toResponse(nguoiDung);
     }

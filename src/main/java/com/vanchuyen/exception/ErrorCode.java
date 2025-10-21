@@ -14,7 +14,8 @@ public enum ErrorCode {
 
 
     // Authentication
-    
+    AUTHENTICATION_REQUIRED(2002, "Bạn chưa đăng nhập", HttpStatus.UNAUTHORIZED),
+    TOKEN_EXPIRED(2003, "Token đã hết hạn", HttpStatus.UNAUTHORIZED),
 
     
 
@@ -75,7 +76,10 @@ public enum ErrorCode {
 
     CMND_CCCD_PATTERN(1008, "CMND/CCCD phải từ 9 đến 12 chữ số", HttpStatus.BAD_REQUEST),
 
-    NGAY_SINH_PAST(1009, "Ngày sinh phải là ngày trong quá khứ", HttpStatus.BAD_REQUEST);
+    NGAY_SINH_PAST(1009, "Ngày sinh phải là ngày trong quá khứ", HttpStatus.BAD_REQUEST),
+
+    AUTHENTICATION_FAILED(2001, "Sai tài khoản hoặc mật khẩu", HttpStatus.UNAUTHORIZED),
+
     ;
     private int code;
     private String message;
