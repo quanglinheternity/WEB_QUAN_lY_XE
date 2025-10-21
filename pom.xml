@@ -79,6 +79,12 @@
 			<version>${mapstruct.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- BCrypt để mã hoá mật khẩu -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+			<version>6.4.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>

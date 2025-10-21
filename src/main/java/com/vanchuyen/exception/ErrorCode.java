@@ -3,6 +3,7 @@ package com.vanchuyen.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
+
 import lombok.Getter;
 
 @Getter
@@ -53,6 +54,28 @@ public enum ErrorCode {
     LOAI_XE_NOT_FOUND(2015, "Loại xe không tìm thấy", HttpStatus.BAD_REQUEST),
     XE_NOT_FOUND(2016, "Xe không tìm thấy", HttpStatus.BAD_REQUEST),
     TAI_XE_NOT_FOUND(2017, "Tài xế không tìm thấy", HttpStatus.BAD_REQUEST),
+
+    //người
+    
+    NGUOI_DUNG_EXISTED(1000, "Tài khoản người dùng tồn tại", HttpStatus.BAD_REQUEST),
+    NGUOI_DUNG_NOT_FOUND(1001, "Người dùng không tìm thấy", HttpStatus.BAD_REQUEST),
+    NGUOI_DUNG_ALREADY_EXISTS(1002, "Người dùng đã tồn tại", HttpStatus.BAD_REQUEST),
+    
+    TAI_KHOAN_NOT_BLANK(1001, "Tài khoản không được để trống", HttpStatus.BAD_REQUEST),
+    TAI_KHOAN_SIZE(1002, "Tài khoản không quá 50 ký tự", HttpStatus.BAD_REQUEST),
+
+    MAT_KHAU_NOT_BLANK(1003, "Mật khẩu không được để trống", HttpStatus.BAD_REQUEST),
+    MAT_KHAU_SIZE(1004, "Mật khẩu từ 6 đến 100 ký tự", HttpStatus.BAD_REQUEST),
+
+    EMAIL_INVALID(1005, "Email không hợp lệ", HttpStatus.BAD_REQUEST),
+
+    SO_DIEN_THOAI_PATTERN(1006, "Số điện thoại phải từ 9 đến 12 chữ số", HttpStatus.BAD_REQUEST),
+
+    HO_TEN_NOT_BLANK(1007, "Họ tên không được để trống", HttpStatus.BAD_REQUEST),
+
+    CMND_CCCD_PATTERN(1008, "CMND/CCCD phải từ 9 đến 12 chữ số", HttpStatus.BAD_REQUEST),
+
+    NGAY_SINH_PAST(1009, "Ngày sinh phải là ngày trong quá khứ", HttpStatus.BAD_REQUEST);
     ;
     private int code;
     private String message;
