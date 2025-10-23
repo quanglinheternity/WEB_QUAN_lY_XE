@@ -23,6 +23,7 @@ public enum ErrorCode {
     INVALID_REQUEST(1000, "Request không hợp lệ", HttpStatus.BAD_REQUEST),
     TUYEN_DUONG_NOT_FOUND(1001, "Tuyến đường không tìm thấy", HttpStatus.BAD_REQUEST),
     LICH_TRINH_DA_DUYET(1002, "Lịch trình đã xử lý", HttpStatus.BAD_REQUEST),
+    TUYEN_DUONG_DANG_DUNG(1003, "Tuyến đường đã dừng hoạt động", HttpStatus.BAD_REQUEST),
     //Loại xe
     LOAIXE_MA_REQUIRED(2001, "Mã loại xe không được để trống", HttpStatus.BAD_REQUEST),
     LOAIXE_MA_MAXLENGTH(2002, "Mã loại xe không được vượt quá 20 ký tự", HttpStatus.BAD_REQUEST),
@@ -118,6 +119,15 @@ public enum ErrorCode {
     TEN_LOAI_CHI_PHI_NULL(1013,"Tên loại chi phí không được để trống", HttpStatus.BAD_REQUEST),
     NHOM_CHI_PHI_NULL( 1014,"Nhóm chi phí không được để trống", HttpStatus.BAD_REQUEST),
     TRANG_THAI_REQUIRED( 1015, "Trạng thái không được để trống", HttpStatus.BAD_REQUEST),
+    TEN_TUYEN_REQUIRED(1016, "Tên tuyến không được để trống", HttpStatus.BAD_REQUEST),
+    DIEM_DAU_REQUIRED(1016, "Địa điểm đầu không được để trống", HttpStatus.BAD_REQUEST),
+    DIEM_CUOI_REQUIRED(1016, "Địa điểm cuối không được để trống", HttpStatus.BAD_REQUEST),
+    QUANG_DUONG_REQUIRED(1016, "Quãng đường không được để trống", HttpStatus.BAD_REQUEST),
+    THOI_GIAN_DU_KIEN(1016, "Thời gian dự kiện không hợp lệ", HttpStatus.BAD_REQUEST),
+    CHI_PHI_DU_KIEN(1016, "Chi phí dự kiến không được để trống", HttpStatus.BAD_REQUEST),
+    QUANG_DUONG_INVALID(1017, "Quãng đường phải lớn hơn 0" ,HttpStatus.BAD_REQUEST),
+    CHI_PHI_INVALID(1018, "Chi phí phải lớn hơn 0", HttpStatus.BAD_REQUEST),
+    TRANG_THAI_INVALID(1019, "Trạng thái không hợp lệ", HttpStatus.BAD_REQUEST),;
     ;
     private int code;
     private String message;

@@ -52,8 +52,8 @@ public class LichTrinhService {
 
     public Page<LichTrinhResponse> getAll(String maChuyen, Integer trangThai, Integer page, Integer size) {
         int defaultPage = (page != null && page >= 0) ? page : 0;
-        int defaultSize = (size != null && size > 0) ? size : 20;        // Mặc định 20 bản ghi/trang
-        int maxSize = 100;                                              // Giới hạn max
+        int defaultSize = (size != null && size > 0) ? size : 20;        
+        int maxSize = 100;                                              
         defaultSize = Math.min(defaultSize, maxSize);
         Pageable pageable = PageRequest.of(defaultPage, defaultSize, Sort.by("createdAt").descending());
         Page<LichTrinh> lichTrinhPage;
@@ -85,6 +85,9 @@ public class LichTrinhService {
         // Lấy các entity liên quan
         TuyenDuong tuyenDuong = tuyenDuongRepository.findById(request.getTuyenDuongId())
                 .orElseThrow(() -> new AppException(ErrorCode.TUYEN_DUONG_NOT_FOUND));
+        if(!Boolean.TRUE.equals(tuyenDuong.getTrangThai())) {
+            throw new AppException(ErrorCode.TUYEN_DUONG_DANG_DUNG);
+        }
 
         Xe xe = xeRepository.findById(request.getXeId())
                 .orElseThrow(() -> new AppException(ErrorCode.XE_NOT_FOUND));

@@ -36,12 +36,14 @@ public class XeController {
     @GetMapping
     public ApiResponse<List<XeResponse>> getAll() {
         return ApiResponse.<List<XeResponse>>builder()
+                .message("Lấy danh sách thành công")
                 .data(xeService.getAll())
                 .build();
     }
     @GetMapping("/{id}")
     public ApiResponse<XeResponsedetail> getById(@PathVariable Integer id) {
         return ApiResponse.<XeResponsedetail>builder()
+                .message("Lấy chi tiết thành công")
                 .data(xeService.getById(id))
                 .build();
     }
