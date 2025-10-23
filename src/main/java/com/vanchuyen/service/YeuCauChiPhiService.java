@@ -9,13 +9,17 @@ import org.springframework.stereotype.Service;
 import com.vanchuyen.dto.request.DuyetYeuCauRequest;
 import com.vanchuyen.dto.request.YeuCauChiPhiRequest;
 import com.vanchuyen.dto.response.YeuCauChiPhiResponse;
+import com.vanchuyen.entity.LichSuBaoDuong;
 import com.vanchuyen.entity.LichTrinh;
 import com.vanchuyen.entity.LoaiChiPhi;
 import com.vanchuyen.entity.NguoiDung;
 import com.vanchuyen.entity.YeuCauChiPhi;
+import com.vanchuyen.enums.NhomLoaiChiPhi;
+import com.vanchuyen.enums.TrangThaiYeuCauChiPhi;
 import com.vanchuyen.exception.AppException;
 import com.vanchuyen.exception.ErrorCode;
 import com.vanchuyen.mapper.YeuCauChiPhiMapper;
+import com.vanchuyen.repository.LichSuBaoDuongRepository;
 import com.vanchuyen.repository.LichTrinhRepository;
 import com.vanchuyen.repository.LoaiChiPhiRepository;
 import com.vanchuyen.repository.YeuCauChiPhiRepository;
@@ -35,6 +39,7 @@ public class YeuCauChiPhiService {
     NguoiDungService nguoiDungService;
     LichTrinhRepository lichTrinhRepository;
     LoaiChiPhiRepository loaiChiPhiRepository;
+    LichSuBaoDuongRepository lichSuBaoDuongRepository;
     public YeuCauChiPhiResponse create(YeuCauChiPhiRequest request) {
        
         NguoiDung nguoiDung = nguoiDungService.getMyInfoByToken();
@@ -96,30 +101,57 @@ public class YeuCauChiPhiService {
         .orElseThrow(() -> new AppException(ErrorCode.YEU_CAU_CHI_PHI_NOT_FOUND));
         yeuCauChiPhiRepository.delete(entity);
     }
-    public YeuCauChiPhiResponse duyetYeuCau(Integer id, DuyetYeuCauRequest request){
+    public YeuCauChiPhiResponse duyetYeuCau(Integer id, DuyetYeuCauRequest request) {
         YeuCauChiPhi entity = yeuCauChiPhiRepository.findById(id)
-        .orElseThrow(() -> new AppException(ErrorCode.YEU_CAU_CHI_PHI_NOT_FOUND));
-        NguoiDung nguoiDuyet = nguoiDungService.getMyInfoByToken();
-        if (entity.getTrangThai() == 0) {
-            entity.setNguoiDuyetQL(nguoiDuyet);
-            entity.setThoiGianDuyetQL(LocalDateTime.now());
-            entity.setGhiChuDuyetQL(request.getGhiChu());
+                .orElseThrow(() -> new AppException(ErrorCode.YEU_CAU_CHI_PHI_NOT_FOUND));
 
-            if (request.getDuyet() == false) {
-                entity.setTrangThai(3);
-            } else {
-                entity.setTrangThai(1);
+        NguoiDung nguoiDuyet = nguoiDungService.getMyInfoByToken();
+        TrangThaiYeuCauChiPhi trangThaiHienTai = TrangThaiYeuCauChiPhi.fromCode(entity.getTrangThai());
+
+        switch (trangThaiHienTai) {
+            case CHO_DUYET_QL -> {
+                // Quản lý duyệt
+                entity.setNguoiDuyetQL(nguoiDuyet);
+                entity.setThoiGianDuyetQL(LocalDateTime.now());
+                entity.setGhiChuDuyetQL(request.getGhiChu());
+
+                if (Boolean.FALSE.equals(request.getDuyet())) {
+                    entity.setTrangThai(TrangThaiYeuCauChiPhi.TU_CHOI.getCode());
+                } else {
+                    entity.setTrangThai(TrangThaiYeuCauChiPhi.DA_DUYET_QL.getCode());
+                }
             }
 
-        } else if (entity.getTrangThai() == 1) {
-            entity.setNguoiDuyetKT(nguoiDuyet);
-            entity.setThoiGianDuyetKT(LocalDateTime.now());
-            entity.setGhiChuDuyetKT(request.getGhiChu());
-            entity.setTrangThai(2);
-        } else {
-            throw new AppException(ErrorCode.INVALID_STATE_TRANSITION);
+            case DA_DUYET_QL -> {
+                // Kế toán duyệt
+                
+                entity.setNguoiDuyetKT(nguoiDuyet);
+                entity.setThoiGianDuyetKT(LocalDateTime.now());
+                entity.setGhiChuDuyetKT(request.getGhiChu());
+                entity.setTrangThai(TrangThaiYeuCauChiPhi.DA_DUYET_KT.getCode());
+                if (entity.getLoaiChiPhi() != null 
+                        && entity.getLoaiChiPhi().getNhomChiPhi() != null
+                        && entity.getLoaiChiPhi().getNhomChiPhi() == NhomLoaiChiPhi.BAO_DUONG) {
+
+                    LichSuBaoDuong lichSu = new LichSuBaoDuong();
+                    lichSu.setXe(entity.getLichTrinh().getXe()); // xe trong lịch trình
+                    lichSu.setNgayBaoDuong(entity.getNgayChiPhi());
+                    lichSu.setLoaiBaoDuong(entity.getLoaiChiPhi().getTenLoaiChiPhi());
+                    lichSu.setChiPhi(entity.getSoTien());
+                    lichSu.setMoTaCongViec(entity.getMoTa());
+                    lichSu.setDonViThucHien(entity.getDiaDiemChiPhi());
+                    lichSu.setNguoiTao(entity.getNguoiGui());
+                    lichSu.setCreatedAt(LocalDateTime.now());
+
+                    lichSuBaoDuongRepository.save(lichSu);
+                }
+            }
+
+            default -> throw new AppException(ErrorCode.INVALID_STATE_TRANSITION);
         }
-        return yeuCauChiPhiMapper.toResponse(yeuCauChiPhiRepository.save(entity));
+
+        yeuCauChiPhiRepository.save(entity);
+        return yeuCauChiPhiMapper.toResponse(entity);
     }
 
 }

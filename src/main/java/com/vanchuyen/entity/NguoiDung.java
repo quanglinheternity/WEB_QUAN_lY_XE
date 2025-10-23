@@ -64,8 +64,7 @@ public class NguoiDung {
     @OneToMany(mappedBy = "nguoiTao")
     private List<LichSuBaoDuong> lichSuBaoDuongs;
     
-    @OneToMany(mappedBy = "nguoiBaoCao")
-    private List<TinhTrangXe> tinhTrangXes;
+   
     
     @OneToMany(mappedBy = "nguoiTao")
     private List<LichTrinh> lichTrinhsTao;

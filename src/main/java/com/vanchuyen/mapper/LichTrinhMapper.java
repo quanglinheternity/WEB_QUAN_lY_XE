@@ -19,8 +19,16 @@ public interface LichTrinhMapper {
     @Mapping(target = "nguoiTao", source = "nguoiTao")             // MapStruct gọi map(NguoiDung)
     @Mapping(target = "nguoiDuyet", source = "nguoiDuyet")         // MapStruct gọi map(NguoiDung)
     // @Mapping(target = "yeuCauChiPhis", source = "yeuCauChiPhis")
+    // map enum từ int code
+    @Mapping(target = "trangThaiVanChuyen", expression = "java(TrangThaiVanChuyen.fromCode(lt.getTrangThai()))")
+    // map text mô tả
+    @Mapping(target = "trangThaiVanChuyenText", expression = "java(TrangThaiVanChuyen.fromCode(lt.getTrangThai()).getDescription())")
+    @Mapping(target = "trangThaiDuyet", expression = "java(TrangThaiDuyetLichTrinh.fromCode(lt.getTrangThaiDuyet()))")
+    // map text mô tả
+    @Mapping(target = "trangThaiDuyetText", expression = "java(TrangThaiDuyetLichTrinh.fromCode(lt.getTrangThaiDuyet()).getDescription())")
     LichTrinhResponse toResponse(LichTrinh lt);
 
+    
     Set<LichTrinhResponse> toResponseSet(Set<LichTrinh> ltSet);
 
     // Map NguoiDung → String (hoTen)

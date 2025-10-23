@@ -3,6 +3,9 @@ package com.vanchuyen.dto.response;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.vanchuyen.enums.TrangThaiDuyetLichTrinh;
+import com.vanchuyen.enums.TrangThaiVanChuyen;
+
 public record LichTrinhResponse(
     Integer id,
     String maChuyen,
@@ -13,8 +16,10 @@ public record LichTrinhResponse(
     LocalDateTime ngayKhoiHanh,
     LocalDateTime ngayDuKienDen,
     LocalDateTime ngayThucTeDen,
-    Integer trangThai,
-    Integer trangThaiDuyet,
+    TrangThaiVanChuyen trangThaiVanChuyen,
+    String trangThaiVanChuyenText,
+    TrangThaiDuyetLichTrinh trangThaiDuyet,
+    String trangThaiDuyetText,
     String hangHoaMoTa,
     BigDecimal trongLuongHang,
     String nguoiTao,          // tên người tạo

@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = TaiXeMapper.class)
 public interface NguoiDungMapper {
 
     NguoiDungMapper INSTANCE = Mappers.getMapper(NguoiDungMapper.class);
@@ -19,9 +19,10 @@ public interface NguoiDungMapper {
     @Mapping(target = "lichSuBaoDuongs", ignore = true)
     @Mapping(target = "lichTrinhsTao", ignore = true)
     @Mapping(target = "lichTrinhsDuyet", ignore = true)
-    @Mapping(target = "tinhTrangXes", ignore = true)
     NguoiDung toCreateEntity(NguoiDungCreateRequest request);
 
+    @Mapping(source = "taiXe.nguoiDung.hoTen", target = "hoTen") 
+    @Mapping(source = "taiXe", target = "taiXe")
     NguoiDungResponse toResponse(NguoiDung entity);
 
     @Mapping(target = "id", ignore = true)
@@ -31,6 +32,5 @@ public interface NguoiDungMapper {
     @Mapping(target = "lichSuBaoDuongs", ignore = true)
     @Mapping(target = "lichTrinhsTao", ignore = true)
     @Mapping(target = "lichTrinhsDuyet", ignore = true)
-    @Mapping(target = "tinhTrangXes", ignore = true)
     void updateFromRequest(NguoiDungCreateRequest request, @MappingTarget NguoiDung entity);
 }

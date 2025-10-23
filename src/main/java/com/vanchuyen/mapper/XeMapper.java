@@ -12,11 +12,13 @@ import com.vanchuyen.dto.response.XeResponse;
 import com.vanchuyen.dto.response.XeResponsedetail;
 import com.vanchuyen.entity.Xe;
 
-@Mapper(componentModel = "spring",  uses = {LichSuBaoDuongMapper.class, TinhTrangXeMapper.class, LichTrinhMapper.class})
+@Mapper(componentModel = "spring",  uses = {LichSuBaoDuongMapper.class, TinhTrangXeMapper.class, LichTrinhMapper.class, TaiXeMapper.class})
 public interface XeMapper {
     @Mapping(target = "tenLoaiXe", source = "loaiXe.tenLoaiXe")
     @Mapping(target = "taiXeChinh", source = "taiXeChinh.nguoiDung.hoTen")
+    
     XeResponse toXeResponse(Xe xe);
+
 
     @Mapping(target = "tenLoaiXe", source = "loaiXe.tenLoaiXe")
     @Mapping(target = "taiXeChinh", source = "taiXeChinh.nguoiDung.hoTen")

@@ -37,8 +37,8 @@ public class TaiXe {
     @Column(name = "kinh_nghiem_nam")
     private Integer kinhNghiemNam;
     
-    @Column(name = "trang_thai_lam_viec")
-    private Boolean trangThaiLamViec;
+    @Column(name = "trang_thai_lam_viec", columnDefinition = "int default 0")
+    private int trangThaiLamViec;
     
     @Column(name = "muc_luong_co_ban")
     private BigDecimal mucLuongCoBan;

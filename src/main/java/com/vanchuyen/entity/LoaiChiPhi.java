@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
 
+import com.vanchuyen.enums.NhomLoaiChiPhi;
+
 @Entity
 @Table(name = "loai_chi_phi")
 @Data
@@ -21,8 +23,9 @@ public class LoaiChiPhi {
     @Column(name = "mo_ta")
     private String moTa;
     
+    @Enumerated(EnumType.STRING)
     @Column(name = "nhom_chi_phi")
-    private String nhomChiPhi;
+    private NhomLoaiChiPhi nhomChiPhi;
     
     @Column(name = "trang_thai")
     private Boolean trangThai;

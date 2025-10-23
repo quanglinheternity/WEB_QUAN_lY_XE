@@ -1,7 +1,8 @@
 package com.vanchuyen.enums;
 
 public enum Role {
-    USER,
     ADMIN,
+    QUAN_LY,
+    KE_TOAN,
     TAI_XE
 }

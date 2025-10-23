@@ -32,6 +32,9 @@ public interface YeuCauChiPhiMapper {
     @Mapping(target = "tenNguoiGui", source = "nguoiGui.hoTen")
     @Mapping(target = "tenNguoiDuyetQL", source = "nguoiDuyetQL.hoTen")
     @Mapping(target = "tenNguoiDuyetKT", source = "nguoiDuyetKT.hoTen")
+     @Mapping(target = "trangThai", expression = "java(TrangThaiYeuCauChiPhi.fromCode(entity.getTrangThai()))")
+    // map text mô tả
+    @Mapping(target = "trangThaiText", expression = "java(TrangThaiYeuCauChiPhi.fromCode(entity.getTrangThai()).getDescription())")
     YeuCauChiPhiResponse toResponse(YeuCauChiPhi entity);
 
     @Mapping(target = "id", ignore = true)

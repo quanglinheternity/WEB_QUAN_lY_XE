@@ -69,9 +69,9 @@ public class YeuCauChiPhiController {
     public ApiResponse<YeuCauChiPhiResponse> updateByTrangThai(@PathVariable Integer id, @RequestBody DuyetYeuCauRequest request) {
         YeuCauChiPhiResponse response = yeuCauChiPhiService.duyetYeuCau(id, request);
        String message = switch (response.trangThai()) {
-            case 1 -> "Yêu cầu chi phí đã được duyệt thành công";
-            case 2 -> "Yêu cầu chi phí đã được thanh toán thành công";
-            case 3 -> "Yêu cầu chi phí đã bị từ chối";
+            case DA_DUYET_QL -> "Yêu cầu chi phí đã được duyệt thành công";
+            case DA_DUYET_KT -> "Yêu cầu chi phí đã được thanh toán thành công";
+            case  TU_CHOI -> "Yêu cầu chi phí đã bị từ chối";
             default -> "Cập nhật trạng thái thành công";
         };
         return ApiResponse.<YeuCauChiPhiResponse>builder()

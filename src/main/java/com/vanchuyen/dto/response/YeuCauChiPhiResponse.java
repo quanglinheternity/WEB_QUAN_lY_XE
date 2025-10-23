@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
+import com.vanchuyen.enums.TrangThaiYeuCauChiPhi;
+
 public record YeuCauChiPhiResponse(
     Integer id,
     String maYeuCau,
@@ -18,7 +20,8 @@ public record YeuCauChiPhiResponse(
     Date ngayChiPhi,
     String diaDiemChiPhi,
     String moTa,
-    Integer trangThai,
+    TrangThaiYeuCauChiPhi trangThai,
+    String trangThaiText,
 
     String tenNguoiDuyetQL,
     LocalDateTime thoiGianDuyetQL,

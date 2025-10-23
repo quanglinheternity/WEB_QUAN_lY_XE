@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -36,7 +38,22 @@ public class GlobalException {
     //             .build();
     //     return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     // }
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, Object>> handleEnumParseError(HttpMessageNotReadableException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("code", 400);
+        body.put("message", "Dữ liệu không hợp lệ");
+        
+        // Thông báo lỗi chi tiết cho enum
+        Map<String, String> errors = new HashMap<>();
+        if (ex.getMessage().contains("TrangThaiTaiXe")) {
+            errors.put("trangThaiLamViec", "Giá trị không hợp lệ. Các giá trị hợp lệ: RANH, DANG_CHAY, NGHI_PHEP, TAM_KHOA");
+        }
+        body.put("errors", errors);
 
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+    
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse<Void>> handleAppException(AppException appException) {
         ErrorCode errorCode = appException.getErrorCode();
@@ -90,14 +107,20 @@ public class GlobalException {
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String field = ((FieldError) error).getField();
             String code = error.getDefaultMessage();
+            String message;
+            if ("nhomChiPhi".equals(field)) {
+                // Nếu lỗi là enum TrangThaiTaiXe
+                message = "Nhóm chi phí không hợp lệ. Giá trị hợp lệ: NHIEN_LIEU, PHI_DUONG_BO, SINH_HOAT, BAO_DUONG, PHAT_SINH";
+            } else {
+                // Các lỗi khác vẫn dùng ErrorCode cũ
+                ErrorCode errorCode = Arrays.stream(ErrorCode.values())
+                        .filter(e -> e.name().equals(code))
+                        .findFirst()
+                        .orElse(ErrorCode.INTERNAL_SERVER_ERROR);
+                message = errorCode.getMessage();
+            }
 
-            // Tìm ErrorCode tương ứng theo name
-            ErrorCode errorCode = Arrays.stream(ErrorCode.values())
-                    .filter(e -> e.name().equals(code))
-                    .findFirst()
-                    .orElse(ErrorCode.INTERNAL_SERVER_ERROR);
-
-            errors.put(field, errorCode.getMessage());
+            errors.put(field, message);
         });
 
         response.put("code", 400);

@@ -64,6 +64,7 @@ public class NguoiDungService {
             taiXe.setNguoiDung(nguoiDung);
             taiXe.setNguoiDung(nguoiDung);
             taiXe.setMaTaiXe(taoMaTaiXe()); 
+            taiXe.setTrangThaiLamViec(request.getThongTinTaiXe().getTrangThaiLamViec().getCode());
             log.info("Ma tai xe: {}", taiXe);
             taiXe = taiXeRepository.save(taiXe);
 
@@ -141,6 +142,11 @@ public class NguoiDungService {
                 .orElseThrow(() -> new AppException(ErrorCode.NGUOI_DUNG_NOT_FOUND));
         return nguoiDung;
     }
+    public NguoiDung getNguoiDungById(Integer id) {
+        NguoiDung nguoiDung = nguoiDungRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.NGUOI_DUNG_NOT_FOUND));
+        return nguoiDung;
+    }
     // Hàm tạo mã tài xế tự động
     private String taoMaTaiXe() {
         String prefix = "TX";
@@ -148,5 +154,6 @@ public class NguoiDungService {
         int random = new Random().nextInt(1000);
         return String.format("%s%s%03d", prefix, timestamp, random);
     }
+    
 
 }

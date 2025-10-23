@@ -16,12 +16,13 @@ public enum ErrorCode {
     // Authentication
     AUTHENTICATION_REQUIRED(2002, "Bạn chưa đăng nhập", HttpStatus.UNAUTHORIZED),
     TOKEN_EXPIRED(2003, "Token đã hết hạn", HttpStatus.UNAUTHORIZED),
-
+    LICH_TRINH_CHUA_DUYET(2003, "Lịch trình chua duyet", HttpStatus.BAD_REQUEST),
     INVALID_STATE_TRANSITION(2004, "Trạng thái đã được xử lý", HttpStatus.BAD_REQUEST),
     THONG_TIN_TAI_XE_REQUIRED(2005, "Thống tin tài xế không được để trống", HttpStatus.BAD_REQUEST),
     // 400 - Bad Request
     INVALID_REQUEST(1000, "Request không hợp lệ", HttpStatus.BAD_REQUEST),
-    
+    TUYEN_DUONG_NOT_FOUND(1001, "Tuyến đường không tìm thấy", HttpStatus.BAD_REQUEST),
+    LICH_TRINH_DA_DUYET(1002, "Lịch trình đã xử lý", HttpStatus.BAD_REQUEST),
     //Loại xe
     LOAIXE_MA_REQUIRED(2001, "Mã loại xe không được để trống", HttpStatus.BAD_REQUEST),
     LOAIXE_MA_MAXLENGTH(2002, "Mã loại xe không được vượt quá 20 ký tự", HttpStatus.BAD_REQUEST),
@@ -31,11 +32,13 @@ public enum ErrorCode {
     LOAIXE_TAITRONG_MIN(2006, "Tải trọng tối đa phải lớn hơn 0", HttpStatus.BAD_REQUEST),
     LOAIXE_MOTA_MAXLENGTH(2007, "Mô tả không được vượt quá 255 ký tự", HttpStatus.BAD_REQUEST),
     LOAIXE_TRANGTHAI_REQUIRED(2008, "Trạng thái không được để trống (true/false)", HttpStatus.BAD_REQUEST),
+    TRANG_THAI_KHONG_HOP_LE(2009, "Trạng thái không hợp lệ", HttpStatus.BAD_REQUEST),
+    KHONG_THE_HUY_CHUYEN_DA_HOAN_THANH(2010, "Không thê hủy chuyển trạng thái hoàn thành", HttpStatus.BAD_REQUEST),
     // --- Xe ---
     XE_BIEN_SO_EMPTY(2001, "Biển số xe không được để trống", HttpStatus.BAD_REQUEST),
     XE_BIEN_SO_MAX_LENGTH(2002, "Biển số xe không vượt quá 15 ký tự", HttpStatus.BAD_REQUEST),
     XE_BIEN_SO_INVALID_FORMAT(2003, "Biển số xe chỉ được chứa chữ in hoa, số và dấu '-'", HttpStatus.BAD_REQUEST),
-
+    LOAI_CHI_PHI_CON_YEU_CAU_CHI_PHI(2003, "Loại chi phí có yêu cầu rồi", HttpStatus.BAD_REQUEST),
     XE_LOAI_XE_NULL(2004, "Loại xe không được để trống", HttpStatus.BAD_REQUEST),
     XE_TEN_MAX_LENGTH(2005, "Tên xe không vượt quá 50 ký tự", HttpStatus.BAD_REQUEST),
 
@@ -55,13 +58,14 @@ public enum ErrorCode {
     LOAI_XE_NOT_FOUND(2015, "Loại xe không tìm thấy", HttpStatus.BAD_REQUEST),
     XE_NOT_FOUND(2016, "Xe không tìm thấy", HttpStatus.BAD_REQUEST),
     TAI_XE_NOT_FOUND(2017, "Tài xế không tìm thấy", HttpStatus.BAD_REQUEST),
-
+    XE_DANG_DUNG(2018, "Xe đang không hoạt động", HttpStatus.BAD_REQUEST),
     //người
-    
+    TAI_XE_DANG_DUNG(1000, "Tài xế đang không hoạt động", HttpStatus.BAD_REQUEST),
     NGUOI_DUNG_EXISTED(1000, "Tài khoản người dùng tồn tại", HttpStatus.BAD_REQUEST),
     NGUOI_DUNG_NOT_FOUND(1001, "Người dùng không tìm thấy", HttpStatus.BAD_REQUEST),
     NGUOI_DUNG_ALREADY_EXISTS(1002, "Người dùng đã tồn tại", HttpStatus.BAD_REQUEST),
     
+    INVALID_DATA(1000, "Giá trị nhóm không hợp lệ", HttpStatus.BAD_REQUEST),
     TAI_KHOAN_NOT_BLANK(1001, "Tài khoản không được để trống", HttpStatus.BAD_REQUEST),
     TAI_KHOAN_SIZE(1002, "Tài khoản không quá 50 ký tự", HttpStatus.BAD_REQUEST),
 
@@ -98,7 +102,22 @@ public enum ErrorCode {
     TAI_XE_MUC_LUONG_REQUIRED(3108, "Mức lương cơ bản không được để trống", HttpStatus.BAD_REQUEST),
     TAI_XE_MUC_LUONG_INVALID(3109, "Mức lương cơ bản phải lớn hơn 0", HttpStatus.BAD_REQUEST),
     TAI_XE_NGUOI_DUNG_ID_REQUIRED(3110, "ID người dùng không được để trống", HttpStatus.BAD_REQUEST),
-
+    MA_CHUYEN_NULL(1000, "Mã chuyến không được để trống", HttpStatus.BAD_REQUEST),
+    TUYEN_DUONG_NULL(1001, "Tuyến đường không được để trống", HttpStatus.BAD_REQUEST),
+    XE_NULL(1002, "Xe không được để trống", HttpStatus.BAD_REQUEST),
+    TAI_XE_NULL(1003, "Tài xế chính không được để trống", HttpStatus.BAD_REQUEST),
+    NGAY_KHOI_HANH_NULL(1004, "Ngày khởi hành không được để trống", HttpStatus.BAD_REQUEST),
+    NGAY_DU_KIEN_DEN_NULL(1005, "Ngày dự kiến đến không được để trống", HttpStatus.BAD_REQUEST),
+    HANG_HOA_NULL(1006, "Mô tả hàng hóa không được để trống", HttpStatus.BAD_REQUEST),
+    TRONG_LUONG_NULL(1007, "Trọng lượng hàng không được để trống", HttpStatus.BAD_REQUEST),
+    TRONG_LUONG_INVALID(1008, "Trọng lượng hàng phải lớn hơn 0", HttpStatus.BAD_REQUEST),
+    XE_DA_CO_LICH_TRINH_TRONG_KHOANG_THOI_GIAN_NAY(1009, "Xe đã có lịch trình trong khoảng thời gian này", HttpStatus.BAD_REQUEST),
+    TRANG_THAI_MOI_REQUIRED(1010, "Trạng thái mới không được để trống", HttpStatus.BAD_REQUEST),
+    LICH_TRINH_CHUA_DEN_NOI(1011, "Xe chưa hoàn thành lịch trình", HttpStatus.BAD_REQUEST),
+    MA_LOAI_CHI_PHI_NULL( 1012,"Mã loại chi phí không được để trống", HttpStatus.BAD_REQUEST),
+    TEN_LOAI_CHI_PHI_NULL(1013,"Tên loại chi phí không được để trống", HttpStatus.BAD_REQUEST),
+    NHOM_CHI_PHI_NULL( 1014,"Nhóm chi phí không được để trống", HttpStatus.BAD_REQUEST),
+    TRANG_THAI_REQUIRED( 1015, "Trạng thái không được để trống", HttpStatus.BAD_REQUEST),
     ;
     private int code;
     private String message;

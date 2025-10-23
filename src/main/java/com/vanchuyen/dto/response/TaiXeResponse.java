@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
+import com.vanchuyen.enums.TrangThaiTaiXe;
+
 public record TaiXeResponse(
     Integer id,
     String maTaiXe,
@@ -13,7 +15,8 @@ public record TaiXeResponse(
     Date ngayCapGplx,
     Date ngayHetHanGplx,
     Integer kinhNghiemNam,
-    Boolean trangThaiLamViec,
+    TrangThaiTaiXe trangThaiLamViec,
+    String trangThaiLamViecText,
     BigDecimal mucLuongCoBan,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
